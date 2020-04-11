@@ -23,6 +23,25 @@ def min_coin_change_recur(coins, change):
     return minval
 
 
+# memoized version of recursive solution
+def min_coin_change_recur_memo(coins, change):
+    def min_coin_change_recur(coins, change):
+        nonlocal minval
+        if change <= 0:
+            return 0
+        if change in cache:
+            return cache[change]
+        for coin in coins:
+            if change >= coin:
+                minval = min(minval, 1 + min_coin_change_recur(coins, change - coin))
+        cache[change] = minval
+        return minval
+    cache = {}
+    minval = change
+    min_coin_change_recur(coins, change)
+    return minval
+
+
 def min_coin_change_naive(coins, change):
     if change == 0:
         return 0
@@ -37,6 +56,7 @@ def min_coin_change_naive(coins, change):
 if __name__ == '__main__':
     print(min_coin_change([1, 2, 5], 11))
     print(min_coin_change_recur([1, 2, 5], 11))
+    print(min_coin_change_recur_memo([1, 2, 5], 11))
     print(min_coin_change_naive([1, 2, 5], 11))
     # print(min_coin_change_naive([50, 25, 10, 5, 1], 19))
 
