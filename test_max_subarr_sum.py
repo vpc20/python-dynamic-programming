@@ -1,6 +1,9 @@
 from unittest import TestCase
-from MaximumSubarraySum import max_subarr_sum_naive, max_subarr_sum,max_subarr_sum_dyna,max_subarr_sum_recur
-from random_data import random_int_array_neg
+
+from MaximumSubarraySum import max_subarr_sum_naive, max_subarr_sum, max_subarr_sum_dyna, max_subarr_sum_recur, \
+    max_subarr_sum_pref
+# from random_data import random_int_array_neg
+from RandomData import random_int_array_neg
 
 
 class TestMaxSubarrSum(TestCase):
@@ -21,3 +24,9 @@ class TestMaxSubarrSum(TestCase):
             arr = random_int_array_neg(20, 100)
             print(arr)
             self.assertEqual(max_subarr_sum_naive(arr), max_subarr_sum_recur(arr))
+
+    def test_max_subarr_sum_pref(self):
+        for _ in range(100000):
+            arr = random_int_array_neg(20, 100)
+            # print(arr)
+            self.assertEqual(max_subarr_sum(arr), max_subarr_sum_pref(arr))
