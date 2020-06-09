@@ -3,7 +3,7 @@ from unittest import TestCase
 from LongestCommonSubstring.LCSSubstNaive import lcsubst_naive
 from LongestCommonSubstring.LCSubstIterative import lcsubst_iter
 from LongestCommonSubstring.LCSubstRecursive import lcsubst_recur
-from random_data import random_string
+from RandomData import random_string
 
 
 class TestLCSubstRecur(TestCase):

@@ -1,6 +1,7 @@
 from unittest import TestCase
-from random_data import random_int_array
+
 from PowerSet import powerset_naive, powerset_iter, powerset_recur
+from RandomData import random_int_array
 
 
 class TestPowerset(TestCase):

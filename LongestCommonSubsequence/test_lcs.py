@@ -1,9 +1,11 @@
 from unittest import TestCase
-from LongestCommonSubsequence.LCSNaive import is_subsequence, subsequence
+
 from LongestCommonSubsequence.LCSIterative import lcs_iter
-from LongestCommonSubsequence.LCSRecursive import lcs_recur
+from LongestCommonSubsequence.LCSNaive import is_subsequence, subsequence
 from LongestCommonSubsequence.LCSNaive import lcs_naive
-from random_data import random_string
+from LongestCommonSubsequence.LCSRecursive import lcs_recur
+
+from RandomData import random_string
 
 
 class TestLcs(TestCase):

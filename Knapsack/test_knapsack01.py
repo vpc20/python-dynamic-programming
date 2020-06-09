@@ -4,7 +4,7 @@ from unittest import TestCase
 from Knapsack.Knapsack01Iter import knapsack01_iter
 from Knapsack.Knapsack01Naive import knapsack01_naive
 from Knapsack.Knapsack01Recursive import knapsack01_recur
-from random_data import random_int_array
+from RandomData import random_int_array
 
 
 class TestKnapsack01(TestCase):

@@ -1,7 +1,8 @@
-from unittest import TestCase
-from SubsetSum import is_subset_sum_naive, is_subset_sum_dyna, is_subset_sum_recur
-from random_data import random_int_array
 from random import randrange
+from unittest import TestCase
+
+from RandomData import random_int_array
+from SubsetSum import is_subset_sum_naive, is_subset_sum_dyna, is_subset_sum_recur
 
 
 class TestIsSubsetSum(TestCase):

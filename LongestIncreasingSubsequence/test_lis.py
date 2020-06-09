@@ -1,8 +1,9 @@
 from unittest import TestCase
-from LongestIncreasingSubsequence.LISNaive import lis_naive
+
 from LongestIncreasingSubsequence.LISIter import lis_iter
+from LongestIncreasingSubsequence.LISNaive import lis_naive
 from LongestIncreasingSubsequence.LISRecur import lis_recur
-from random_data import random_int_array_neg
+from RandomData import random_int_array_neg
 
 
 class TestLis(TestCase):

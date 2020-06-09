@@ -1,7 +1,8 @@
 from unittest import TestCase
+
 from LongestSubstringNoRepeat.LongestSubstrNoRepeat import lsnr
 from LongestSubstringNoRepeat.LongestSubstrNoRepeatNaive import lsnr_naive
-from random_data import random_string
+from RandomData import random_string
 
 
 class TestLsnr(TestCase):
