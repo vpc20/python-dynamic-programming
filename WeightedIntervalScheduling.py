@@ -33,16 +33,17 @@ def weighted_interval_sched(intvs):
         return max(intvs[j][2] + interval_sched(p[j]), interval_sched(j - 1))
 
     # intervals = (start_time, finishing_time, value)
+    n = len(intvs)
     intvs.sort(key=lambda e: e[1])  # sort by finishing time
     p = [-1]  # indices of last compatible interval, -1 means no compatible interval
-    for i in range(1, len(intvs)):
+    for i in range(1, n):
         for j in range(i - 1, -1, -1):
             if intvs[i][0] >= intvs[j][1]:
                 p.append(j)
                 break
         else:
             p.append(-1)
-    return interval_sched(len(intvs) - 1)
+    return interval_sched(n - 1)
 
 
 # def weighted_interval_sched_iter(intrvls):  # dynamic
