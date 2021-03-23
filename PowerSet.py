@@ -22,17 +22,34 @@ def powerset_naive(arr):
 #     return dp_arr[-1]
 
 
-def powerset_iter(arr):
+# def powerset_iter(arr):
+#     pset = [[]]
+#     # print(pset)
+#     for i in range(len(arr)):
+#         for e in pset.copy():
+#             e_copy = e.copy()
+#             e_copy.append(arr[i])
+#             pset.append(e_copy)
+#         # print(pset)
+#     return pset
+
+def powerset(arr):
     pset = [[]]
-    # print(pset)
-    for i in range(len(arr)):
+    for n in arr:
         for e in pset.copy():
-            e_copy = e.copy()
-            e_copy.append(arr[i])
-            pset.append(e_copy)
-        # print(pset)
+            pset.append(e + [n])
     return pset
 
+
+# class Solution:
+#
+#     def subsets(self, nums: List[int]) -> List[List[int]]:
+#         # You start with a list that contains one empty list (null subset)
+#         power_set = [[]]
+#         for num in nums:
+#             power_set += [subset + [num] for subset in power_set]
+#
+#         return power_set
 
 # def powerset_recur(arr):
 #     if not arr:
@@ -72,10 +89,15 @@ if __name__ == '__main__':
     # print(powerset_iter([745, 993, 599]))
     # print(list(powerset_recur([])))
 
-    print(powerset_iter([5, 6]))
     #  0     1          2
     # [[[]], []       , []                    ]
     # [[[]], [[], [1]], []                    ]
     # [[[]], [[], [1]], [[], [2], [1], [1, 2]]]
     print(list(powerset_recur([5, 6])))
     # print(list(powerset_recur([5, 6])))
+
+    print(powerset([]))
+    print(powerset([1]))
+    print(powerset([1, 2]))
+    print(powerset([1, 2, 3]))
+    print(powerset([1, 2, 2]))
