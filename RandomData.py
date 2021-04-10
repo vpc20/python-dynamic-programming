@@ -6,6 +6,10 @@ def random_int_array(max_arr_size, max_int):
     return [randrange(max_int + 1) for _ in range(randrange(max_arr_size + 1))]
 
 
+def random_int_array_no_zero(max_arr_size, max_int):
+    return [randrange(1, max_int + 1) for _ in range(randrange(max_arr_size + 1))]
+
+
 def random_int_array_neg(max_size, max_int):
     arr = [randrange(max_int + 1) for _ in range(randrange(max_size + 1))]
     return [-n if n % 3 == 0 else n for n in arr]
@@ -63,3 +67,4 @@ def random_string_len_n(n):
 # s = 'abcdefghij'
 # for i in range(50):
 #     print(random_substring(s, 5))
+# print(random_int_array(5, 15))

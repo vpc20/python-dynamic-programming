@@ -4,7 +4,7 @@ from unittest import TestCase
 from Knapsack.Knapsack01Iter import knapsack01_iter
 from Knapsack.Knapsack01Naive import knapsack01_naive
 from Knapsack.Knapsack01Recursive import knapsack01_recur
-from RandomData import random_int_array
+from RandomData import random_int_array_no_zero
 
 
 class TestKnapsack01(TestCase):
@@ -29,7 +29,7 @@ class TestKnapsack01(TestCase):
 
         for _ in range(1000):
             # wts = list(set(random_int_array(10, 15)))
-            wts = random_int_array(10, 15)
+            wts = random_int_array_no_zero(10, 15)
             if wts:
                 vals = [random.randrange(1, 15) for _ in range(len(wts))]
                 for wt_limit in range(1, max(wts)):
@@ -58,12 +58,11 @@ class TestKnapsack01(TestCase):
                              knapsack01_iter(wts, vals, wt_limit))
 
         for _ in range(1000):
-            # wts = list(set(random_int_array(10, 15)))
-            wts = random_int_array(10, 15)
+            wts = random_int_array_no_zero(10, 15)
             if wts:
                 vals = [random.randrange(1, 15) for _ in range(len(wts))]
                 for wt_limit in range(1, max(wts)):
                     print(wts, vals, wt_limit)
-                    print(knapsack01_recur(wts, vals, wt_limit))
+                    # print(knapsack01_iter(wts, vals, wt_limit))
                     self.assertEqual(knapsack01_naive(wts, vals, wt_limit),
                                      knapsack01_iter(wts, vals, wt_limit))
