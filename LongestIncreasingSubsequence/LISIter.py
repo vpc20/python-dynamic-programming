@@ -1,24 +1,36 @@
 def lis_iter(arr):
-    dp_arr = [1] * len(arr)
-    print(dp_arr)
-    # num_arr = [[arr[0]]] + [[] for _ in range(len(arr) - 1)]
-    num_arr = [[e] for e in arr]
-    # print(num_arr)
-    max_len = 1
-    max_i = 0
+    dp = [1] * len(arr)
+    maxlen = 1
     for i in range(1, len(arr)):
         for j in range(i):
-            if arr[i] > arr[j] and dp_arr[j] + 1 > dp_arr[i]:
-                dp_arr[i] = dp_arr[j] + 1
-                if dp_arr[i] >= max_len:
-                    max_len = dp_arr[i]
-                    max_i = i
-                    num_arr[i] = num_arr[j] + [arr[i]]
-        print(dp_arr)
-    # print(num_arr)
-    if num_arr:
-        print(num_arr[max_i])
-    return max_len
+            if arr[i] > arr[j]:
+                dp[i] = max(dp[i], 1 + dp[j])
+        maxlen = max(maxlen, dp[i])
+    return maxlen
+
+
+# include the subsequence in ouput
+# def lis_iter(arr):
+#     dp_arr = [1] * len(arr)
+#     print(dp_arr)
+#     # num_arr = [[arr[0]]] + [[] for _ in range(len(arr) - 1)]
+#     num_arr = [[e] for e in arr]
+#     # print(num_arr)
+#     max_len = 1
+#     max_i = 0
+#     for i in range(1, len(arr)):
+#         for j in range(i):
+#             if arr[i] > arr[j] and dp_arr[j] + 1 > dp_arr[i]:
+#                 dp_arr[i] = dp_arr[j] + 1
+#                 if dp_arr[i] >= max_len:
+#                     max_len = dp_arr[i]
+#                     max_i = i
+#                     num_arr[i] = num_arr[j] + [arr[i]]
+#         print(dp_arr)
+#     # print(num_arr)
+#     if num_arr:
+#         print(num_arr[max_i])
+#     return max_len
 
 
 if __name__ == '__main__':
