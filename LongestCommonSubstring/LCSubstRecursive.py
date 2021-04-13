@@ -14,7 +14,7 @@ def lcsubst_recur(s1, s2, count=0):
     return max(count, max(lcsubst_recur(s1[:-1], s2), lcsubst_recur(s1, s2[:-1])))
 
 
-# def lcsubst_recur(s1, s2):  # incorrect
+# def lcsubst_recur(s1, s2):
 #     def _lcsubst_recur(s1, s2):
 #         nonlocal maxlen
 #         if not s1 or not s2:
@@ -23,10 +23,13 @@ def lcsubst_recur(s1, s2, count=0):
 #             strlen = 1 + _lcsubst_recur(s1[:-1], s2[:-1])
 #             maxlen = max(maxlen, strlen)
 #             return strlen
-#         return max(_lcsubst_recur(s1[:-1], s2), _lcsubst_recur(s1, s2[:-1]))
+#         else:
+#             return 0
 #
 #     maxlen = 0
-#     _lcsubst_recur(s1, s2)
+#     for i in range(1, len(s1) + 1):
+#         for j in range(1, len(s2) + 1):
+#             _lcsubst_recur(s1[:i], s2[:j])
 #     return maxlen
 
 

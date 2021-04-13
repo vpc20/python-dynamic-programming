@@ -1,41 +1,48 @@
 def lcs_iter(s1, s2):
     dp_arr = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
-    lcs_arr = [[' '] * (len(s2) + 1) for _ in range(len(s1) + 1)]
 
     for i in range(1, len(s1) + 1):
         for j in range(1, len(s2) + 1):
             if s1[i - 1] == s2[j - 1]:
                 dp_arr[i][j] = dp_arr[i - 1][j - 1] + 1
-                lcs_arr[i][j] = '↖'
             else:
-                if dp_arr[i - 1][j] > dp_arr[i][j - 1]:
-                    dp_arr[i][j] = dp_arr[i - 1][j]
-                    lcs_arr[i][j] = '↑'
-                else:
-                    dp_arr[i][j] = dp_arr[i][j - 1]
-                    lcs_arr[i][j] = '←'
-    # for e in dp_arr:
-    #     print(e)
-    # print(dp_arr)
-    # for e in lcs_arr:
-    #     print(e)
-    # print(lcs_arr)
-    # return dp_arr[i][j]
-    # ********* find string
-    maxlen = dp_arr[i][j]
-    lcs_str = ''
-    while lcs_arr[i][j] != ' ':
-        if lcs_arr[i][j] == '↖':  # diagonal - up-left
-            lcs_str += s1[i - 1]
-            i -= 1
-            j -= 1
-        elif lcs_arr[i][j] == '↑':  # go up
-            i -= 1
-        elif lcs_arr[i][j] == '←':  # go left
-            j -= 1
-    print(lcs_str[::-1])
-    # return maxlen
-    return lcs_str[::-1]
+                dp_arr[i][j] = max(dp_arr[i][j - 1], dp_arr[i - 1][j])
+
+    return dp_arr[i][j]
+
+
+
+# def lcs_iter(s1, s2):
+#     dp_arr = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+#     lcs_arr = [[' '] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+#
+#     for i in range(1, len(s1) + 1):
+#         for j in range(1, len(s2) + 1):
+#             if s1[i - 1] == s2[j - 1]:
+#                 dp_arr[i][j] = dp_arr[i - 1][j - 1] + 1
+#                 lcs_arr[i][j] = '↖'
+#             else:
+#                 if dp_arr[i - 1][j] > dp_arr[i][j - 1]:
+#                     dp_arr[i][j] = dp_arr[i - 1][j]
+#                     lcs_arr[i][j] = '↑'
+#                 else:
+#                     dp_arr[i][j] = dp_arr[i][j - 1]
+#                     lcs_arr[i][j] = '←'
+#     # ********* find string
+#     maxlen = dp_arr[i][j]
+#     lcs_str = ''
+#     while lcs_arr[i][j] != ' ':
+#         if lcs_arr[i][j] == '↖':  # diagonal - up-left
+#             lcs_str += s1[i - 1]
+#             i -= 1
+#             j -= 1
+#         elif lcs_arr[i][j] == '↑':  # go up
+#             i -= 1
+#         elif lcs_arr[i][j] == '←':  # go left
+#             j -= 1
+#     print(lcs_str[::-1])
+#     # return maxlen
+#     return lcs_str[::-1]
 
     # str_arr = []
     # for i in range(len(s1), 0, -1):
@@ -43,21 +50,6 @@ def lcs_iter(s1, s2):
     #         if dp_arr[i][j] == maxlen and s1[i - 1] == s2[j - 1]:
     #             str_arr.append(get_lcs(dp_arr, s1, s2, i, j, maxlen))
     # return maxlen, str_arr
-
-
-# def lcs_iter(s1, s2):
-#     dp_arr = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
-#
-#     for i in range(1, len(s1) + 1):
-#         for j in range(1, len(s2) + 1):
-#             if s1[i - 1] == s2[j - 1]:
-#                 dp_arr[i][j] = dp_arr[i - 1][j - 1] + 1
-#             else:
-#                 dp_arr[i][j] = max(dp_arr[i][j - 1], dp_arr[i - 1][j])
-#     # for e in dp_arr:
-#     #     print(e)
-#
-#     return dp_arr[i][j]
 
 
 # def lcs_iter(s1, s2):

@@ -1,24 +1,38 @@
 def lcsubst_iter(s1, s2):
-    s1 = ' ' + s1
-    s2 = ' ' + s2
-    dp_arr = [[0] * (len(s2)) for _ in range(len(s1))]
+    dp_arr = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
     maxlen = 0
 
-    for i in range(1, len(s1)):
-        for j in range(1, len(s2)):
-            if s1[i] == s2[j]:
+    for i in range(1, len(s1) + 1):
+        for j in range(1, len(s2) + 1):
+            if s1[i - 1] == s2[j - 1]:
                 dp_arr[i][j] = dp_arr[i - 1][j - 1] + 1
                 maxlen = max(maxlen, dp_arr[i][j])
-    # print(dp_arr)
-    # for e in dp_arr:
-    #     print(e)
-    # find all the strings
-    str_arr = []
-    for j in range(len(s2) - 1, -1, -1):
-        for i in range(len(s1) - 1, -1, -1):
-            if s1[i] == s2[j] and dp_arr[i][j] == maxlen:
-                str_arr.append(get_lcsubst(s1, i, maxlen))
-    return maxlen  # , str_arr
+
+    return maxlen
+
+
+# include the string itself as output
+# def lcsubst_iter(s1, s2):
+#     s1 = ' ' + s1
+#     s2 = ' ' + s2
+#     dp_arr = [[0] * (len(s2)) for _ in range(len(s1))]
+#     maxlen = 0
+#
+#     for i in range(1, len(s1)):
+#         for j in range(1, len(s2)):
+#             if s1[i] == s2[j]:
+#                 dp_arr[i][j] = dp_arr[i - 1][j - 1] + 1
+#                 maxlen = max(maxlen, dp_arr[i][j])
+#     # print(dp_arr)
+#     # for e in dp_arr:
+#     #     print(e)
+#     # find all the strings
+#     str_arr = []
+#     for j in range(len(s2) - 1, -1, -1):
+#         for i in range(len(s1) - 1, -1, -1):
+#             if s1[i] == s2[j] and dp_arr[i][j] == maxlen:
+#                 str_arr.append(get_lcsubst(s1, i, maxlen))
+#     return maxlen  # , str_arr
 
 
 def get_lcsubst(s, i, strlen):
