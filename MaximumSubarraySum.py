@@ -58,12 +58,12 @@ def max_subarr_sum_dyna(arr):
     if not arr:
         return 0
     dp_arr = [0] * len(arr)
-    print(dp_arr)
+    # print(dp_arr)
     maxsum = -sys.maxsize
     for i in range(len(arr)):
         dp_arr[i] = max(arr[i], arr[i] + dp_arr[i - 1])
         maxsum = max(maxsum, dp_arr[i])
-        print(dp_arr)
+        # print(dp_arr)
     return maxsum
 
 
@@ -136,33 +136,32 @@ def max_subarr_sum_recur(arr):  # dyna equivalent
 #     return maxsum, start_idx, end_idx
 
 
-def max_subarr_sum_pref(arr):  # solution using prefix sum
-    if not arr:
-        return 0
-    for i in range(1, len(arr)):  # convert arr to prefix sum array
-        arr[i] += arr[i - 1]
-
-    min_pref_sum = 0
-    maxsum = -sys.maxsize
-    for j in range(len(arr)):
-        maxsum = max(maxsum, arr[j] - min_pref_sum)
-        min_pref_sum = min(min_pref_sum, arr[j])
-    return maxsum
-
-
 # def max_subarr_sum_pref(arr):  # solution using prefix sum
 #     if not arr:
 #         return 0
+#     for i in range(1, len(arr)):  # convert arr to prefix sum array
+#         arr[i] += arr[i - 1]
 #
 #     min_pref_sum = 0
 #     maxsum = -sys.maxsize
-#     for i in range(len(arr)):  # convert arr to prefix sum array
-#         if i > 0:
-#             arr[i] += arr[i - 1]
-#         maxsum = max(maxsum, arr[i] - min_pref_sum)
-#         min_pref_sum = min(min_pref_sum, arr[i])
-#
+#     for j in range(len(arr)):
+#         maxsum = max(maxsum, arr[j] - min_pref_sum)
+#         min_pref_sum = min(min_pref_sum, arr[j])
 #     return maxsum
+
+
+def max_subarr_sum_pref(arr):  # solution using prefix sum
+    if not arr:
+        return 0
+
+    prefsum = min_prefsum = 0
+    maxsum = -sys.maxsize
+    for num in arr:
+        prefsum += num
+        maxsum = max(maxsum, prefsum - min_prefsum)
+        min_prefsum = min(min_prefsum, prefsum)
+
+    return maxsum
 
 
 if __name__ == '__main__':
@@ -213,6 +212,7 @@ if __name__ == '__main__':
     print(max_subarr_sum([5, -1, 6, -3, 4, 2, -2]))
     print(max_subarr_sum_dyna([5, -1, 6, -3, 4, 2, -2]))
     print(max_subarr_sum_recur([5, -1, 6, -3, 4, 2, -2]))
+    print(max_subarr_sum_pref([5, -1, 6, -3, 4, 2, -2]))
 
     #      0   1    2   3    4    5    6   7
     #    ┌───┬───┬────┬───┬────┬────┬────┬───┐
