@@ -56,12 +56,26 @@ def min_distance(word1, word2):
             if word1[i - 1] == word2[j - 1]:
                 dp[i][j] = dp[i - 1][j - 1]
             else:
-                dp[i][j] = min(dp[i - 1][j] + 1,
-                               dp[i][j - 1] + 1)
-    # for e in dp:
-    #     print(e)
-    # print('')
+                dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1])
+    for e in dp:
+        print(e)
+    print('')
     return dp[-1][-1]
+
+
+def min_distance_recur(word1, word2):
+    if not word1 and not word2:
+        return 0
+    if not word1:
+        return len(word2)
+    if not word2:
+        return len(word1)
+
+    if word1[-1] == word2[-1]:
+        return min_distance_recur(word1[:-1], word2[:-1])
+    else:
+        return 1 + min(min_distance_recur(word1[:-1], word2),
+                       min_distance_recur(word1, word2[:-1]))
 
 
 assert min_distance_naive("sea", "eat") == 2
@@ -71,3 +85,7 @@ assert min_distance_naive("x", "y") == 2
 assert min_distance("sea", "eat") == 2
 assert min_distance("leetcode", "etco") == 4
 assert min_distance("x", "y") == 2
+
+assert min_distance_recur("sea", "eat") == 2
+assert min_distance_recur("leetcode", "etco") == 4
+assert min_distance_recur("x", "y") == 2
