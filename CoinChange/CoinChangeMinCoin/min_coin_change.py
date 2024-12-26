@@ -1,6 +1,5 @@
 # Given a set of coins, find the minimum number of coins needed to produce the change amount
 
-import sys
 from itertools import combinations_with_replacement
 
 
