@@ -38,7 +38,18 @@ def powerset(arr):
     for n in arr:
         for e in pset.copy():
             pset.append(e + [n])
+        print(pset)
     return pset
+
+
+def power_set(nums):
+    result = [[]]
+
+    for num in nums:
+        new_subsets = [subset + [num] for subset in result]
+        result.extend(new_subsets)
+
+    return result
 
 
 # class Solution:
@@ -96,8 +107,8 @@ if __name__ == '__main__':
     print(list(powerset_recur([5, 6])))
     # print(list(powerset_recur([5, 6])))
 
-    print(powerset([]))
-    print(powerset([1]))
-    print(powerset([1, 2]))
+##    print(powerset([]))
+##    print(powerset([1]))
+##    print(powerset([1, 2]))
     print(powerset([1, 2, 3]))
-    print(powerset([1, 2, 2]))
+##    print(powerset([1, 2, 2]))
