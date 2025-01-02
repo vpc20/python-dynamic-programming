@@ -92,6 +92,17 @@ def powerset_recur(arr):  # dyna equivalent
 #         for p in powerset_recur(arr[:-1]):
 #             yield p + [arr[-1]]
 
+def powerset_recur1(array):
+    if not array:
+        return [[]]
+    else:
+        head = array[0]
+        tail = array[1:]
+        subsets = powerset(tail)
+        for subset in subsets[:]:
+            subsets.append(subset + [head])
+        return subsets
+
 
 if __name__ == '__main__':
     # print(powerset_naive([1, 2]))
@@ -107,8 +118,8 @@ if __name__ == '__main__':
     print(list(powerset_recur([5, 6])))
     # print(list(powerset_recur([5, 6])))
 
-##    print(powerset([]))
-##    print(powerset([1]))
-##    print(powerset([1, 2]))
+    ##    print(powerset([]))
+    ##    print(powerset([1]))
+    ##    print(powerset([1, 2]))
     print(powerset([1, 2, 3]))
 ##    print(powerset([1, 2, 2]))
