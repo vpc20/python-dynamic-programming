@@ -20,6 +20,8 @@
 import sys
 from itertools import combinations_with_replacement
 
+from ascii_box1 import ascii_box1
+
 
 # def cut_rod_naive(prices, rod_len):
 #     maxprc = 0
@@ -38,11 +40,11 @@ from itertools import combinations_with_replacement
 
 def cut_rod_naive(prices, l):
     maxprc = 0
-    lengths = [i for i in range(1, len(prices) + 1)]
+    lengths = [i for i in range(1, len(prices))]
     for r in range(1, l + 1):
         for comb in combinations_with_replacement(lengths, r):
             if sum(comb) == l:
-                totprc = sum([prices[i - 1] for i in comb])
+                totprc = sum([prices[i] for i in comb])
                 maxprc = max(maxprc, totprc)
     return maxprc
 
@@ -104,17 +106,30 @@ def cut_rod_recur(prices, rod_len):
 
 
 def cut_rod_dyna(prices, l):
-    dp = [[0] * (l + 1) for _ in range(len(prices) + 1)]
-    maxprc = -sys.maxsize
-    for i in range(1, len(prices) + 1):
+    dp = [[0] * (l + 1) for _ in range(len(prices))]  # max price
+    dp1 = [[[] for _ in range(l + 1)] for _ in range(len(prices))]  # list of selected rods
+    for e in dp1:
+        print(e)
+    max_price = -sys.maxsize
+    for i in range(1, len(prices)):
         for j in range(1, l + 1):
-            if j >= i:
-                dp[i][j] = max(dp[i - 1][j], prices[i - 1] + dp[i][j - i])
+            if i <= j:
+                # dp[i][j] = max(dp[i - 1][j], prices[i] + dp[i][j - i])
+                prev = dp[i - 1][j]
+                curr = prices[i] + dp[i][j - i]
+                if curr > prev:
+                    dp[i][j] = curr
+                    dp1[i][j] = dp1[i][j - i] + [i]
+                else:
+                    dp[i][j] = prev
+                    dp1[i][j] = dp1[i - 1][j]
             else:
                 dp[i][j] = dp[i - 1][j]
-            maxprc = max(maxprc, dp[i][j])
+                dp1[i][j] = dp1[i - 1][j]
+            max_price = max(max_price, dp[i][j])
     print(dp)
-    return maxprc
+    ascii_box1(dp1)
+    return max_price
 
 
 # def cut_rod_dyna(prices, l):  # simplified version
@@ -129,7 +144,7 @@ def cut_rod_dyna(prices, l):
 
 
 if __name__ == '__main__':
-    prices = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
+    prices = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]  # add 0 for index 0 in array
 
     # assert cut_rod_naive(prices, 1) == cut_rod_recur(prices, 1)
     # assert cut_rod_naive(prices, 2) == cut_rod_recur(prices, 2)
@@ -149,8 +164,8 @@ if __name__ == '__main__':
     # assert cut_rod_naive(prices, 7) == cut_rod_dyna(prices, 7)
     # assert cut_rod_naive(prices, 8) == cut_rod_dyna(prices, 8)
 
-    print(cut_rod_dyna(prices, 4))
-
+    # print(cut_rod_dyna(prices, 4))
+    print(cut_rod_naive(prices, 4))
 
 #            ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
 #  length i  │  1 │  2 │  3 │  4 │  5 │  6 │  7 │  8 │  9 │ 10 │
