@@ -18,9 +18,13 @@
 #  price  pi │  1 │  5 │  8 │  9 │ 10 │ 17 │ 17 │ 20 │ 24 │ 30 │
 #            └────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
 import sys
+from functools import lru_cache
 from itertools import combinations_with_replacement
+from sys import setrecursionlimit
 
 from ascii_box1 import ascii_box1
+
+setrecursionlimit(1000000000)
 
 
 # def cut_rod_naive(prices, rod_len):
@@ -39,41 +43,45 @@ from ascii_box1 import ascii_box1
 
 
 def cut_rod_naive(prices, l):
-    maxprc = 0
+    max_price = 0
+    max_rods = tuple()
     lengths = [i for i in range(1, len(prices))]
     for r in range(1, l + 1):
         for comb in combinations_with_replacement(lengths, r):
             if sum(comb) == l:
-                totprc = sum([prices[i] for i in comb])
-                maxprc = max(maxprc, totprc)
-    return maxprc
+                total_price = sum([prices[i] for i in comb])
+                if total_price > max_price:
+                    max_price = total_price
+                    max_rods = comb
+    return max_price  #, max_rods
+
+
+@lru_cache(maxsize=None)
+def cut_rod_recur(prices, l):
+    if l == 0:
+        return 0
+    max_price = -sys.maxsize
+    for i in range(1, l + 1):
+        max_price = max(max_price, prices[i] + cut_rod_recur(prices, l - i))
+    return max_price
 
 
 # def cut_rod_recur(prices, rod_len):
-#     if rod_len == 0:
-#         return 0
-#     max_price = -sys.maxsize
-#     for i in range(1, rod_len + 1):
-#         max_price = max(max_price, prices[i - 1] + cut_rod_recur(prices, rod_len - i))
-#     return max_price
-
-
-def cut_rod_recur(prices, rod_len):
-    def cut_rod(prices, rod_len):
-        nonlocal maxprc
-        if not prices or rod_len == 0:
-            return 0
-        if rod_len >= len(prices):
-            totprc = max(cut_rod(prices[:-1], rod_len),
-                         prices[-1] + cut_rod(prices, rod_len - len(prices)))
-        else:
-            totprc = cut_rod(prices[:-1], rod_len)
-        maxprc = max(maxprc, totprc)
-        return totprc
-
-    maxprc = -sys.maxsize
-    cut_rod(prices, rod_len)
-    return maxprc
+#     def cut_rod(prices, rod_len):
+#         nonlocal maxprc
+#         if not prices or rod_len == 0:
+#             return 0
+#         if rod_len >= len(prices):
+#             totprc = max(cut_rod(prices[:-1], rod_len),
+#                          prices[-1] + cut_rod(prices, rod_len - len(prices)))
+#         else:
+#             totprc = cut_rod(prices[:-1], rod_len)
+#         maxprc = max(maxprc, totprc)
+#         return totprc
+#
+#     maxprc = -sys.maxsize
+#     cut_rod(prices, rod_len)
+#     return maxprc
 
 
 # def cut_rod_recur_dyna(prices, rod_len):
@@ -108,8 +116,6 @@ def cut_rod_recur(prices, rod_len):
 def cut_rod_dyna(prices, l):
     dp = [[0] * (l + 1) for _ in range(len(prices))]  # max price
     dp1 = [[[] for _ in range(l + 1)] for _ in range(len(prices))]  # list of selected rods
-    for e in dp1:
-        print(e)
     max_price = -sys.maxsize
     for i in range(1, len(prices)):
         for j in range(1, l + 1):
@@ -127,9 +133,8 @@ def cut_rod_dyna(prices, l):
                 dp[i][j] = dp[i - 1][j]
                 dp1[i][j] = dp1[i - 1][j]
             max_price = max(max_price, dp[i][j])
-    print(dp)
-    ascii_box1(dp1)
-    return max_price
+    # ascii_box1(dp1)
+    return dp[-1][-1]  #, dp1[-1][-1]
 
 
 # def cut_rod_dyna(prices, l):  # simplified version
@@ -144,28 +149,30 @@ def cut_rod_dyna(prices, l):
 
 
 if __name__ == '__main__':
-    prices = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]  # add 0 for index 0 in array
+    # prices = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]  # add 0 for index 0 in array
+    prices = (0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30)  # changed to tuple for hashing in cache
 
-    # assert cut_rod_naive(prices, 1) == cut_rod_recur(prices, 1)
-    # assert cut_rod_naive(prices, 2) == cut_rod_recur(prices, 2)
-    # assert cut_rod_naive(prices, 3) == cut_rod_recur(prices, 3)
-    # assert cut_rod_naive(prices, 4) == cut_rod_recur(prices, 4)
-    # assert cut_rod_naive(prices, 5) == cut_rod_recur(prices, 5)
-    # assert cut_rod_naive(prices, 6) == cut_rod_recur(prices, 6)
-    # assert cut_rod_naive(prices, 7) == cut_rod_recur(prices, 7)
-    # assert cut_rod_naive(prices, 8) == cut_rod_recur(prices, 8)
-    #
-    # assert cut_rod_naive(prices, 1) == cut_rod_dyna(prices, 1)
-    # assert cut_rod_naive(prices, 2) == cut_rod_dyna(prices, 2)
-    # assert cut_rod_naive(prices, 3) == cut_rod_dyna(prices, 3)
-    # assert cut_rod_naive(prices, 4) == cut_rod_dyna(prices, 4)
-    # assert cut_rod_naive(prices, 5) == cut_rod_dyna(prices, 5)
-    # assert cut_rod_naive(prices, 6) == cut_rod_dyna(prices, 6)
-    # assert cut_rod_naive(prices, 7) == cut_rod_dyna(prices, 7)
-    # assert cut_rod_naive(prices, 8) == cut_rod_dyna(prices, 8)
+    assert cut_rod_naive(prices, 1) == cut_rod_recur(prices, 1)
+    assert cut_rod_naive(prices, 2) == cut_rod_recur(prices, 2)
+    assert cut_rod_naive(prices, 3) == cut_rod_recur(prices, 3)
+    assert cut_rod_naive(prices, 4) == cut_rod_recur(prices, 4)
+    assert cut_rod_naive(prices, 5) == cut_rod_recur(prices, 5)
+    assert cut_rod_naive(prices, 6) == cut_rod_recur(prices, 6)
+    assert cut_rod_naive(prices, 7) == cut_rod_recur(prices, 7)
+    assert cut_rod_naive(prices, 8) == cut_rod_recur(prices, 8)
 
-    # print(cut_rod_dyna(prices, 4))
+    assert cut_rod_naive(prices, 1) == cut_rod_dyna(prices, 1)
+    assert cut_rod_naive(prices, 2) == cut_rod_dyna(prices, 2)
+    assert cut_rod_naive(prices, 3) == cut_rod_dyna(prices, 3)
+    assert cut_rod_naive(prices, 4) == cut_rod_dyna(prices, 4)
+    assert cut_rod_naive(prices, 5) == cut_rod_dyna(prices, 5)
+    assert cut_rod_naive(prices, 6) == cut_rod_dyna(prices, 6)
+    assert cut_rod_naive(prices, 7) == cut_rod_dyna(prices, 7)
+    assert cut_rod_naive(prices, 8) == cut_rod_dyna(prices, 8)
+
     print(cut_rod_naive(prices, 4))
+    print(cut_rod_dyna(prices, 4))
+    print(cut_rod_recur(prices, 4))
 
 #            ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
 #  length i  │  1 │  2 │  3 │  4 │  5 │  6 │  7 │  8 │  9 │ 10 │
